@@ -33,9 +33,10 @@ export default function Display() {
 
     let [temp_chart,setTemp_chart]=useState([]);
     let [pressure_chart,setPressure_chart]=useState([]);
-    let[sec,setSec]=useState(0)
+    let [sec,setSec]=useState(0)
     let [showPress, setShowPress] = useState(true)
     let [showTemp, setShowTemp] = useState(false)
+    let [ledstate,setLedstate]=useState('OFF');
     var label=[]
 
     for (let i=0;i<20;i++)
@@ -75,6 +76,17 @@ export default function Display() {
     {
       get_Pressure_Data()
     },[sec])
+
+    // Send LED_STATE
+    /*async function get_LED_STATE(){
+      let {data} = await axios.post('http://localhost:5000//TrunLed',ledstate);
+      console.log(data)        
+      }
+      useEffect(()=>
+      {
+        get_LED_STATE()
+
+      })*/
 
     var Temp_data = {
       labels: label.map((index) => index),
@@ -148,6 +160,15 @@ export default function Display() {
     setShowTemp((prev)=>!prev)
     setShowPress((prev)=>!prev)
   }
+
+  async function SET_LED_STATE()
+  {
+    setLedstate('ON');
+    let response = await axios.post('http://localhost:5000//TrunLed',ledstate);
+   // console.log(data)
+    console.log(response)        
+  }
+
   return (
     <div className='container-fluid'>
     <div className='pt-4 mt-3'>
@@ -168,14 +189,12 @@ export default function Display() {
       
       </div>
   <div className="col-md-5 offset-2">
-    <button className='btn btn-primary'>Alarm</button>
+    <button className='btn btn-primary' onClick={()=>SET_LED_STATE()} > Alarm </button>
   </div></div>
   </div>
   <h2 className='Time_Header border border-2 py-2 mt-2' > <i className="fa-solid fa-clock"></i> {new Date().toLocaleTimeString()}.</h2>
   {/* <button className='btn btn-primary mt-5'  onClick={()=>refreshPage()}>Update Data</button> */}
-
   </div>
- 
   <p>{sec}</p>
   </div>
   )

@@ -10,6 +10,8 @@ app.use(cors());
 
 const port = process.env.PORT || 5000; 
 
+var state= 'OFF';
+
 // Create connection
 const db = mysql.createConnection({
     host: 'localhost',
@@ -87,4 +89,21 @@ app.post('/pres', (req, res) => {
   });
 });
 
+// Firing ALarm /LED permission
+app.post('/TrunLed', (req, res) => {
+  const LEdState = req.body.status;
+  if (LEdState == 'ON') {
+    state = 'ON' ;
+  }
+  else{
+    state = 'OFF';
+  }
+  console.log(state);
+  return res.send(`LED STATUS IS ${state}`); 
+});
   
+app.get('/LEDSTATE', (req, res) => {
+
+  console.log(state) 
+  res.send(state);
+});
