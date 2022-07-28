@@ -27,7 +27,7 @@ node server.js
 
 # Tasks
 - [x] React and React Native development.
-- [x] servr establishment using NodeJS. 
+- [x] server establishment using NodeJS. 
 - [x] DataBase for Tempreture and Preassure readings.
 - [x] Server connection with DataBase.
 - [ ] Toggling aqusition upon desired selection.
